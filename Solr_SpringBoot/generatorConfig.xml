@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+<classPathEntry location="C:\Users\hyama\.m2\repository\mysql\mysql-connector-java\5.1.42\mysql-connector-java-5.1.42.jar" />
+  <context id="context1">
+    <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/spring_example" driverClass="com.mysql.jdbc.Driver" password="root" userId="root" />
+    <javaModelGenerator targetPackage="jp.ne.sakura.sync.web.entity" targetProject="Solr_SpringBoot" />
+    <sqlMapGenerator targetPackage="jp.ne.sakura.sync.web.mepper" targetProject="Solr_SpringBoot" />
+    <javaClientGenerator targetPackage="jp.ne.sakura.sync.web.mepper" targetProject="Solr_SpringBoot" type="XMLMAPPER" />
+    <table schema="spring_example" tableName="%">
+    </table>
+  </context>
+</generatorConfiguration>

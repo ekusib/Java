@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Thymereef Parameter</title>
+	</head>
+	<body>
+
+		<h1>Thymereef Parameter</h1>
+		<p th:text="'from parameter... id=' + ${param.id[0] + ',name=' + param.name[0]}"></p>
+
+	</body>
+</html>

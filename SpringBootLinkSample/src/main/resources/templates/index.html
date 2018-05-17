@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Link Sample</title>
+	</head>
+	<body>
+		<h1>Link Sample</h1>
+		<p><a th:href="@{'/home/' + ${param.id[0]}}">link</a></p>
+	</body>
+</html>

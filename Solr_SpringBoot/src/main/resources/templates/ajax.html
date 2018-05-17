@@ -1,0 +1,60 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link media="screen" href="/css/ajax.css" th:href="@{/css/ajax.css}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/ajax.js" th:src="@{/js/ajax.js}"></script>
+<title>Solr検索サンプル</title>
+</head>
+<body>
+
+<div id="searchCondition">
+  <div id="searchQuery" data-search-query=""></div>
+  <div id="searchFq" data-search-fq=""></div>
+</div>
+
+<div id="wrap">
+
+<div id="header">
+  <h1><a id="initialSearch">Solr検索サンプル</a></h1><br/>
+  <input id="query" type="text" name="query" />
+  <input id="querySearchBtn" class="btn btn-secondary btn-xs" value="検索" type="submit" />
+</div>
+
+
+<div id="result_header">
+</div>
+
+<div id="content">
+    <div id="result" class="right">
+
+    </div>
+
+    <div id="template">
+      <span id="templateResult">
+	    <h2 class="url-title"></h2>
+	    <div class="articles summary"></div>
+	    <br/>
+	    <div class="articles author"></div>
+	    <div class="articles info"></div>
+	    <br />
+	  </span>
+	</div>
+
+
+    <div id="facet" class="left">
+
+	</div>
+
+<div style="CLEAR: both"></div>
+
+</div>
+
+
+<div id="page">
+	<b>Page</b>
+</div>
+
+<div id="footer">著作権表示など</div></div></body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>DB Sample</title>
+	</head>
+	<body>
+		<h1>取得データ</h1>
+		<table border="1px solid black">
+			<tr>
+				<th>名前</th>
+				<th>メールアドレス</th>
+				<th>役職</th>
+			</tr>
+			<tr th:each="emp: ${emp}">
+				<td th:text="${emp.name}">名前</td>
+				<td th:text="${emp.mail}">メールアドレス</td>
+				<td th:text="${emp.positionNo}">役職</td>
+			</tr>
+
+		</table>
+	</body>
+</html>

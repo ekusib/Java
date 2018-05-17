@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+
+		<h1>Util Sample</h1>
+		<p th:text="${#dates.format(new java.util.Date(), 'dd/MMM/yyy HH:mm')}"></p>
+		<p th:text="${#numbers.formatInteger(1234, 7)}"></p>
+		<p th:text="${#strings.toUpperCase('SpringBoot.')}"></p>
+	</body>
+</html>

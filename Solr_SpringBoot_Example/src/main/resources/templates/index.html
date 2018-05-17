@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/css/style.css" th:href="@{/css/style.css}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" src="/js/ajax.js" th:src="@{/js/ajax.js}"></script>
+
+<span id="title">
+<title th:text="Solr検索サンプル"></title>
+</span>
+
+
+</head>
+<body>
+<div id="wrap">
+<div id="header">
+  <h1><a href="/customsolr/index">Solr検索サンプル</a></h1>
+  <br/>
+  <form id="queryForm">
+    <input type="text" name="query" class="qTxt"/>
+    <input value="検索" type="submit" class="querySearchBtn" />
+  </form>
+</div>
+
+
+<div id="result_header">
+  <span th:unless="${solrSpringBootModel.query} == ''" id="query">
+    <b th:text="${query}"id="query"></b> の検索結果&nbsp;&nbsp;&nbsp;
+  </span>
+  <span th:if="${solrSpringBootModel.data.found} > 0">
+    <b th:text="${solrSpringBootModel.data.found}" id="found"></b> 件中
+    <b th:text="${solrSpringBootModel.data.start + 1}" id="start"></b> -
+    <b th:text="${solrSpringBootModel.data.rows + solrSpringBootModel.data.start} > ${solrSpringBootModel.data.found} ? ${solrSpringBootModel.data.found} : ${solrSpringBootModel.data.rows + solrSpringBootModel.data.start}" id="rows"></b> 件目
+  </span>
+  <span th:unless="${solrSpringBootModel.data.found} > 0">
+    <b>0</b> 件
+  </span>
+  <span th:text="'( ' + ${solrSpringBootModel.data.qtime} + ' 秒 )'"></span>
+</div>
+
+<span class="body">
+<div id="content">
+  <span id="notFound">
+  <span th:unless="${solrSpringBootModel.data.found} == 0">
+    <div id="result" class="right">
+
+	  <span th:each="result : ${solrSpringBootModel.results}">
+		<h2><a th:href="${result.url}" th:text="'[' + ${result.title} + ']'" id="resultTitle"></a></h2>
+		<div class="articles" th:text="${result.summary}" id="resultSummary"></div>
+		<br/>
+		<div class="articles" th:text="${result.author}" id="resultAuthor"></div>
+		<div class="articles" th:text="${result.info}" id="resultInfo"></div>
+
+		<hr/>
+	  </span>
+
+    </div>
+
+    <div id="facet" class="left">
+      <span th:each="facetFieldModel : ${solrSpringBootModel.facet_fields}">
+      	<span th:each = "facetField : ${facetFieldModel}">
+
+	      <h2 th:text="${facetField.facetLabelName}" class="facetLabelName"></h2>
+
+	       <span th:each="facetFieldArray : ${facetField.facetFieldArray}" class="facetFields">
+		 	 <a href="#" th:data-query="${solrSpringBootModel.query}" th:data-fq="${facetFieldArray.facetName + ':' + facetFieldArray.nameStr}" th:data-start="${solrSpringBootModel.data.start}" th:text="${facetFieldArray.nameStr}  + '(' + ${facetFieldArray.countLong} + ')'" class="facetField"></a><br />
+		   </span>
+
+		 </span>
+	  </span>
+
+      <span th:each="facetQuery : ${solrSpringBootModel.facet_queries}">
+		<h2 th:text="${facetQuery.queryLabelName}" class="queryLabelName"></h2>
+		 <span th:each="facetQueryArray : ${facetQuery.facetCountLink}">
+		      <a href="#" th:data-query="${solrSpringBootModel.query}" th:data-fq="${facetQueryArray.pubStr}" th:data-start="${solrSpringBootModel.data.start}" th:text="${facetQueryArray.queryStr} + '(' + ${facetQueryArray.countInt} + ')'" class="facetQuery"></a><br />
+		</span>
+	  </span>
+	</div>
+  </span>
+
+
+<div style="CLEAR: both"></div>
+</div>
+
+<div id="page">
+  <span th:if="${solrSpringBootModel.pagination.pcnt} > 1">
+	<strong>Page</strong>
+	  <span th:if="${solrSpringBootModel.pagination.cpag} > 1">
+	    <a href="#" th:data-query="${solrSpringBootModel.query}" th:data-fq="${solrSpringBootModel.query}" th:data-start=0 class="sentou">|&lt;&lt;先頭ページへ</a>&nbsp;&nbsp;&nbsp;
+	    <a href="#" th:data-query="${solrSpringBootModel.query}" th:data-fq="${solrSpringBootModel.query}" th:data-start="${(solrSpringBootModel.pagination.cpag - 2) * data.rows}" class="mae">&lt;前へ</a>&nbsp;&nbsp;&nbsp;
+	  </span>
+	  &nbsp;
+	  <span th:each="page : ${solrSpringBootModel.pagination.pages}">
+	    <span th:if="${solrSpringBootModel.pagination.cpag} == ${page}">
+	      <span th:text="${page}"></span>&nbsp;&nbsp;&nbsp;
+	    </span>
+	    <span th:unless="${solrSpringBootModel.pagination.cpag} == ${page}">
+	      <a href="#" th:data-query="${solrSpringBootModel.query}" th:data-fq="${solrSpringBootModel.query}"  th:data-start="${(page-1) * solrSpringBootModel.data.rows}" th:text="${page}" class="pagination"></a>&nbsp;&nbsp;&nbsp;
+	    </span>
+	  </span>
+	  &nbsp;
+	  <span th:if="${solrSpringBootModel.pagination.cpag} < ${solrSpringBootModel.pagination.pcnt}">
+	    <a href="#" th:data-query="${solrSpringBootModel.query}" th:data-fq="${solrSpringBootModel.query}"  th:data-start="${solrSpringBootModel.pagination.cpag * solrSpringBootModel.data.rows}" class="tugi">次へ&gt;</a>&nbsp;&nbsp;&nbsp;
+	    <a href="#" th:data-query="${solrSpringBootModel.query}" th:data-fq="${solrSpringBootModel.query}"  th:data-start="${(solrSpringBootModel.pagination.pcnt-1) * solrSpringBootModel.data.rows}"class="matubi">末尾ページへ&gt;&gt;|</a>&nbsp;&nbsp;&nbsp;
+	  </span>
+  </span>
+</div>
+
+</span>
+
+<div id="footer">著作権表示など</div></div></body>
+</html>

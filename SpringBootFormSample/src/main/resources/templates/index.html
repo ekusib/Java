@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Form Sample</title>
+	</head>
+	<body>
+		<h1>Form Sample</h1>
+		<pre th:text="${msg}">please wait...</pre>
+		<br />
+
+		<form method="POST" th:action="@{/}">
+			<div>
+				<input type="checkbox" id="check1" name="check1" />
+				<label for="check1">チェックボックス</label>
+			</div>
+			<br />
+			<h2>性別を選択してください。</h2>
+			<div>
+				<input type="radio" id="radioA" name="radio1" value="male" />
+				<label for="radioA">男性</label>
+			</div>
+			<div>
+				<input type="radio" id="radioB" name="radio1" value="female" />
+				<label for="radioB">女性</label>
+			</div>
+			<div>
+				<h2>使用しているPC</h2>
+				<select id="select1" name="select1" size="3">
+
+					<option value="Windows">Windows</option>
+					<option value="Mac">Mac</option>
+					<option value="Linux">Linux</option>
+
+				</select>
+				<h2>持っている電話(複数選択可能)</h2>
+				<select id="select2" name="select2" size="3" multiple="multiple">
+
+					<option value="Android">Android</option>
+					<option value="iPhone">iPhone</opption>
+					<option value="WinPhone">Windows Phone</option>
+
+				</select>
+			</div>
+			<input type="submit" value="送信" />
+		</form>
+	</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link media="screen" href="/css/style.css" th:href="@{/css/style.css}" type="text/css" rel="stylesheet" />
+<title th:text="${query} == '' ? Solr検索サンプル  : ${query} + 'の検索結果'"></title>
+</head>
+<body>
+<div id="wrap">
+
+<div id="header">
+  <h1><a href="#">Solr検索サンプル</a></h1>
+  <br/>
+  <form action="/search">
+    <input type="text" name="query" />
+    <input value="検索" type="submit" />
+  </form>
+</div>
+
+
+<div id="result_header" th:with="found=${numbers.get(0)}, start=${numbers.get(1)}, rows=${numbers.get(2)}, qtime=${numbers.get(3)}">
+  <span th:unless="${query} == ''">
+    <b th:text="${query}"></b> の検索結果&nbsp;&nbsp;&nbsp;
+  </span>
+  <span th:if="${found} > 0">
+    <b th:text="${found}"></b> 件中
+    <b th:text="${start + 1}"></b> -
+    <b th:text="${rows + start} > ${found} ? ${found} : ${rows + start}"></b> 件目
+  </span>
+  <span th:unless="${found} > 0">
+    <b>0</b> 件
+  </span>
+  <span th:text="'( ' + ${qtime} + ' 秒 )'"></span>
+</div>
+
+<div id="content" th:with="found=${numbers.get(0)}">
+  <span th:if="${found} == 0">
+    <b th:text="${query}"></b> は見つかりませんでした。他の検索語で試してください。
+  </span>
+  <span th:unless="${found} == 0">
+    <div id="result" class="right">
+
+	  <span th:each="result : ${results}">
+		<h2><a th:href="${result.get(0)}" th:text="${result.get(1)}"></a></h2>
+		<div class="articles" th:text="${result.get(2)}"></div>
+		<br/>
+		<div class="articles" th:text="${result.get(3)}"></div>
+		<div class="articles" th:text="${result.get(4)}"></div>
+
+		<hr/>
+	  </span>
+
+    </div>
+
+
+    <div id="facet" class="left">
+      <span th:each="facetFieldMap : ${facetFieldList}">
+        <span th:each="facetField : ${facetFieldMap}">
+	      <h2 th:text="${#util.getFacetLabel(facetField.key)}"></h2>
+	      <span th:each="count : ${facetField.value}">
+		    <a th:href="@{/index(query=${query}, fq=${fq}, fq=${facetField.key + ':' + count.key}, start=0)}" th:text="${count.key} + '(' + ${count.value} + ')'"></a><br />
+		  </span>
+	    </span>
+	  </span>
+
+      <span th:each="queryLabelName : ${#util.getFacetQueries().keySet()}">
+		<h2 th:text="${queryLabelName}"></h2>
+		<span th:each="facetQueryMap : ${facetQueryList}">
+		  <span th:each="facetQuery : ${facetQueryMap}">
+		    <span th:each="count : ${facetQuery.value}">
+		      <a th:href="@{/index(query=${query}, fq=${fq}, fq=${facetQuery.key}, start=0)}" th:text="${count.key} + '(' + ${count.value} + ')'"></a><br />
+		    </span>
+		  </span>
+		</span>
+	  </span>
+	</div>
+
+  </span>
+
+<div style="CLEAR: both"></div>
+
+</div>
+
+
+<div id="page" th:with="rows=${numbers.get(2)}, pages=${pagenation.get(0)}, pcnt=${pagenation.get(1)}, cpag=${pagenation.get(2)}">
+  <span th:if="${pcnt} &gt; 1">
+	<strong>Page</strong>
+	  <span th:if="${cpag} &gt; 1">
+	    <a th:href="@{/index(query=${query}, fq=${fq}, start=0)}">|&lt;&lt;先頭ページへ</a>&nbsp;&nbsp;&nbsp;
+	    <a th:href="@{/index(query=${query}, fq=${fq}, start=${(cpag - 2) * rows})}">&lt;前へ</a>&nbsp;&nbsp;&nbsp;
+	  </span>
+	  &nbsp;
+	  <span th:each="page : ${pages}">
+	    <span th:if="${cpag} == ${page}">
+	      <span th:text="${page}"></span>&nbsp;&nbsp;&nbsp;
+	    </span>
+	    <span th:unless="${cpag} == ${page}">
+	      <a th:href="@{/index(query=${query}, fq=${fq}, start=${(page-1) * rows})}" th:text="${page}"></a>&nbsp;&nbsp;&nbsp;
+	    </span>
+	  </span>
+	  &nbsp;
+	  <span th:if="${cpag} &lt; ${pcnt}">
+	    <a th:href="@{/index(query=${query}, fq=${fq}, start=${cpag * rows})}">次へ&gt;</a>&nbsp;&nbsp;&nbsp;
+	    <a th:href="@{/index(query=${query}, fq=${fq}, start=${(pcnt-1) * rows})}">末尾ページへ&gt;&gt;|</a>&nbsp;&nbsp;&nbsp;
+	  </span>
+  </span>
+</div>
+
+<div id="footer">著作権表示など</div></div></body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>ForEach Sample</title>
+	</head>
+	<body>
+		<h1>ForEach Sample</h1>
+		<table border="1px solid #000">
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>MAIL</th>
+			</tr>
+			<tr th:each="obj: ${data}">
+				<td th:text="${obj[0]}">id</td>
+				<td th:text="${obj[1]}">name</td>
+				<td th:text="${obj[2]}">mail</td>
+			</tr>
+		</table>
+	</body>
+</html>

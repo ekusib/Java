@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8" />
+		<title>Ajax Sample</title>
+		<link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="/js/sample.js" th:src="@{/js/sample.js}"></script>
+	</head>
+	<body>
+		<div class="wrapper">
+		　　<h1>Ajax Sample</h1>
+		    <div class="content">
+		      <label>郵便番号</label>
+		      <span class="content_form">
+		        <input id="zip" name="zip" type="text" placeholder="1600002"/>
+		      </span>
+		      <span class="content_form">
+		        <input class="studentEnrollment_button" type="button" value="住所を自動で入力する" id="setStateBtn" />
+		      </span>
+		    </div>
+		    <div class="content">
+		      <label>都道府県</label>
+		      <span class="content_form">
+		        <input id="state" name="state" type="text" placeholder="東京都" />
+		      </span>
+		    </div>
+		    <div class="content">
+		      <label>市区町村</label>
+		      <span class="content_form">
+		        <input id="city" name="city" type="text" placeholder="新宿区" />
+		      </span>
+		    </div>
+		    <div class="content">
+		      <label>番地</label>
+		      <span class="content_form">
+		        <input id="address1" name="address1" type="text" placeholder="西新宿666" />
+		      </span>
+		    </div>
+		    <div class="content">
+		      <label>建物名・階・部屋番号</label>
+		      <span class="content_form">
+		        <input id="address2" name="address2" type="text" placeholder="ビルヂング666" />
+		      </span>
+		    </div>
+		</div>
+	</body>
+</html>
